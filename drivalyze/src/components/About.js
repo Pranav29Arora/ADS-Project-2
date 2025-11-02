@@ -5,7 +5,7 @@ const About = () => {
   return (
     <div className="about-container">
       <section className="about-section">
-        <h2>Why Choose CarPricePredictor?</h2>
+        <h2>Why Choose drivalyze?</h2>
         <div className="features-grid">
           <div className="feature-card">
             <h3>AI-Driven Insights</h3>
@@ -25,7 +25,7 @@ const About = () => {
           </div>
         </div>
         <p className="about-conclusion">
-          Whether you're buying your first car or selling your old one, CarPricePredictor gives you <strong>confidence and clarity</strong> in every decision.
+          Whether you're buying your first car or selling your old one, drivalyze gives you <strong>confidence and clarity</strong> in every decision.
         </p>
       </section>
 

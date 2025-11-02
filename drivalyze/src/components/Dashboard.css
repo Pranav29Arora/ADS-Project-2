@@ -1,421 +1,77 @@
-/* Dashboard Styles */
+/* Simple Dashboard Styles */
 .dashboard {
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  color: #333;
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.5rem;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.welcome-message h1 {
-  font-size: 2rem;
-  margin: 0;
-  color: #2d3748;
-  font-weight: 700;
-}
-
-.welcome-message p {
-  margin: 0.5rem 0 0;
-  color: #4a5568;
-  font-size: 1.1rem;
-}
-
-/* Stats Cards */
-.dashboard-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.stat-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-}
-
-.stat-icon {
-  font-size: 2rem;
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f4ff;
-  color: #4f46e5;
+  padding: 2rem 1rem;
 }
 
-.stat-content h3 {
-  margin: 0 0 0.25rem;
-  font-size: 0.95rem;
-  color: #64748b;
-  font-weight: 600;
-}
-
-.stat-value {
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin: 0;
-  color: #1e293b;
-}
-
-.stat-value.up {
-  color: #10b981;
-}
-
-.stat-value.down {
-  color: #ef4444;
-}
-
-.stat-label {
-  margin: 0.25rem 0 0;
-  font-size: 0.85rem;
-  color: #94a3b8;
-}
-
-/* Dashboard Content Grid */
-.dashboard-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-/* Card Styles */
-.dashboard-card {
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.card-header h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: #1e293b;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.see-all {
-  color: #4f46e5;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
-}
-
-.see-all:hover {
-  color: #4338ca;
-  text-decoration: underline;
-}
-
-/* Trending Models */
-.trending-models {
-  display: grid;
-  gap: 1.25rem;
-}
-
-.trending-model {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1rem;
-  border-radius: 12px;
-  transition: background 0.2s ease;
-}
-
-.trending-model:hover {
-  background: #f8fafc;
-}
-
-.car-image {
-  width: 80px;
-  height: 60px;
-  border-radius: 8px;
-  background: #f1f5f9;
-  background-size: cover;
-  background-position: center;
-}
-
-.car-details h4 {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
-  color: #1e293b;
-}
-
-.price-range {
-  margin: 0 0 0.75rem;
-  font-size: 0.9rem;
-  color: #64748b;
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1px solid #e2e8f0;
-  color: #4f46e5;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-outline:hover {
-  background: #f8fafc;
-  border-color: #c7d2fe;
-}
-
-/* Recent Activity */
-.prediction-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.prediction-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.prediction-item:last-child {
-  border-bottom: none;
-}
-
-.prediction-info h4 {
-  margin: 0 0 0.25rem;
-  font-size: 0.95rem;
-  color: #1e293b;
-}
-
-.prediction-date {
-  font-size: 0.8rem;
-  color: #94a3b8;
-}
-
-.prediction-price {
-  font-weight: 600;
-  color: #1e293b;
-}
-
-/* Market Trends */
-.market-trends {
-  margin-bottom: 2rem;
-}
-
-.time-filters {
-  display: flex;
-  gap: 0.5rem;
-  background: #f8fafc;
-  padding: 0.25rem;
-  border-radius: 8px;
-}
-
-.time-filter {
-  background: none;
-  border: none;
-  padding: 0.35rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #64748b;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.time-filter.active {
-  background: white;
-  color: #4f46e5;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.trends-container {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 2rem;
-  margin-top: 1.5rem;
-}
-
-.trend-chart {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 1.5rem;
-  position: relative;
-  height: 250px;
-}
-
-.chart-placeholder {
-  position: relative;
-  height: 100%;
+.welcome-container {
+  max-width: 600px;
   width: 100%;
+  text-align: center;
+  animation: fadeIn 0.6s ease-out;
 }
 
-.chart-line {
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #e2e8f0;
-}
-
-.chart-points {
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  height: 150px;
-}
-
-.chart-point {
-  width: 10px;
-  height: 100px;
-  background: #4f46e5;
-  border-radius: 4px;
-  position: relative;
-  animation: chartRise 1s ease-out forwards;
-  opacity: 0;
-  transform-origin: bottom;
-}
-
-@keyframes chartRise {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
   to {
     opacity: 1;
-    height: var(--height);
+    transform: translateY(0);
   }
 }
 
-.chart-labels {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1rem;
-  color: #94a3b8;
-  font-size: 0.8rem;
+.welcome-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
 }
 
-.trend-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.welcome-subtitle {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
 }
 
-.trend-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background: #f8fafc;
-  border-radius: 8px;
-  transition: transform 0.2s ease;
-}
-
-.trend-item:hover {
-  transform: translateX(5px);
-}
-
-.model-name {
-  font-weight: 500;
-  color: #1e293b;
-}
-
-.trend-value {
+.predict-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  font-size: 0.9rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-.trend-value.up {
-  color: #10b981;
+.predict-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
-.trend-value.down {
-  color: #ef4444;
+.predict-button:active {
+  transform: translateY(0);
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .trends-container {
-    grid-template-columns: 1fr;
+@media (max-width: 600px) {
+  .welcome-content h1 {
+    font-size: 2rem;
   }
-  
-  .chart-placeholder {
-    margin-bottom: 2rem;
-  }
-}
 
-@media (max-width: 992px) {
-  .dashboard-content {
-    grid-template-columns: 1fr;
+  .welcome-subtitle {
+    font-size: 1rem;
   }
-}
 
-@media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-  
-  .welcome-message {
-    text-align: center;
-  }
-  
-  .dashboard-stats {
-    grid-template-columns: 1fr;
+  .predict-button {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
   }
 }
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.dashboard > * {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-/* Set different delays for staggered animation */
-.dashboard > *:nth-child(1) { animation-delay: 0.1s; }
-.dashboard > *:nth-child(2) { animation-delay: 0.2s; }
-.dashboard > *:nth-child(3) { animation-delay: 0.3s; }
-.dashboard > *:nth-child(4) { animation-delay: 0.4s; }

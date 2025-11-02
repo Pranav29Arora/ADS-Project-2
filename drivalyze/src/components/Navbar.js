@@ -33,7 +33,7 @@ const Navbar = ({ isLoggedIn, onAuthClick }) => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
-          CarPricePredictor
+          drivalyze
         </Link>
 
         <div className="menu-icon" onClick={toggleMenu}>
@@ -41,21 +41,25 @@ const Navbar = ({ isLoggedIn, onAuthClick }) => {
         </div>
 
         <ul className={isMenuOpen ? 'nav-menu active' : 'nav-menu'}>
-          <li className="nav-item">
-            <Link to="/" className="nav-links" onClick={closeMenu}>
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/about" className="nav-links" onClick={closeMenu}>
-              About
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/contact" className="nav-links" onClick={closeMenu}>
-              Contact
-            </Link>
-          </li>
+          {isLoggedIn && (
+            <>
+              <li className="nav-item">
+                <Link to="/" className="nav-links" onClick={closeMenu}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/about" className="nav-links" onClick={closeMenu}>
+                  About
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/contact" className="nav-links" onClick={closeMenu}>
+                  Contact
+                </Link>
+              </li>
+            </>
+          )}
           <li className="nav-item nav-btn">
             <button 
               className={`auth-btn ${isLoggedIn ? 'logout' : 'login'}`}

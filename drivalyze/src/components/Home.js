@@ -1,10 +1,16 @@
 import React from 'react';
 import { FaCar, FaChartLine, FaShieldAlt, FaMobileAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const Home = ({ isLoggedIn, onGetStarted }) => {
+  const navigate = useNavigate();
+  
   if (isLoggedIn) return null;
+
+  const handleGetStarted = () => {
+    navigate('/login');
+  };
 
   const features = [
     {
@@ -54,7 +60,7 @@ const Home = ({ isLoggedIn, onGetStarted }) => {
             Get instant, accurate car price estimates powered by AI. Make informed decisions when buying or selling your car.
           </p>
           <div className="cta-buttons">
-            <button onClick={onGetStarted} className="cta-primary">
+            <button onClick={handleGetStarted} className="cta-primary">
               Get Started for Free
             </button>
             <a href="#how-it-works" className="cta-secondary">
@@ -76,21 +82,12 @@ const Home = ({ isLoggedIn, onGetStarted }) => {
             </div>
           </div>
         </div>
-        <div className="hero-image">
-          <div className="car-card">
-            <div className="car-image"></div>
-            <div className="car-details">
-              <h3>2023 Hyundai Creta</h3>
-              <p>Predicted Price: <span>₹14.5 - 16.2 Lakh</span></p>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Features Section */}
       <section className="features-section">
         <div className="section-header">
-          <h2>Why Choose CarPricePredictor?</h2>
+          <h2>Why Choose drivalyze?</h2>
           <p>We make car valuation simple, fast, and accurate</p>
         </div>
         <div className="features-grid">
@@ -155,7 +152,7 @@ const Home = ({ isLoggedIn, onGetStarted }) => {
         <div className="cta-content">
           <h2>Ready to Discover Your Car's True Value?</h2>
           <p>Get started now and make smarter car buying or selling decisions.</p>
-          <button onClick={onGetStarted} className="cta-primary cta-large">
+          <button onClick={handleGetStarted} className="cta-primary cta-large">
             Get Your Free Estimate
           </button>
         </div>
