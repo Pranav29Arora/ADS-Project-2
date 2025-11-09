@@ -5,8 +5,11 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
 import CarPricePredictor from './components/CarPricePredictor';
+import About from './components/About';
+import Contact from './components/Contact';
 import './components/Home.css';
 import './components/Dashboard.css';
+import './components/Contact.css';
 
 // Dashboard Component
 const Dashboard = ({ onLogout, onShowPredictor }) => {
@@ -29,19 +32,7 @@ const Dashboard = ({ onLogout, onShowPredictor }) => {
   );
 };
 
-const About = () => (
-  <div className="page-container">
-    <h2>About drivalyze</h2>
-    <p>We provide accurate car price predictions using advanced AI algorithms trained on real market data.</p>
-  </div>
-);
 
-const Contact = () => (
-  <div className="page-container">
-    <h2>Contact Us</h2>
-    <p>Have questions? Reach out to our team at contact@drivalyze.com</p>
-  </div>
-);
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -126,14 +117,14 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
-        <footer className="glass-footer">
+        <footer>
           <div className="footer-content">
-            <div className="footer-links">
+            <nav className="footer-links">
               <a href="/about">About</a>
               <a href="/contact">Contact</a>
               <a href="#privacy">Privacy Policy</a>
               <a href="#terms">Terms of Service</a>
-            </div>
+            </nav>
             <div className="social-links">
               <a href="#twitter" aria-label="Twitter">🐦</a>
               <a href="#facebook" aria-label="Facebook">👍</a>
