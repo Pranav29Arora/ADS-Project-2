@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 import './Navbar.css';
 
 const Navbar = ({ isLoggedIn, onAuthClick }) => {
@@ -32,9 +33,7 @@ const Navbar = ({ isLoggedIn, onAuthClick }) => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo" onClick={closeMenu}>
-          drivalyze
-        </Link>
+        <Logo onClick={closeMenu} />
 
         <div className="menu-icon" onClick={toggleMenu}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}

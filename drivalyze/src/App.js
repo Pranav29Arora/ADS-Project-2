@@ -49,18 +49,34 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPredictor, setShowPredictor] = useState(false);
 
-  // Check for existing session on initial load
+  // Check for existing session on initial load and on route changes
   useEffect(() => {
-    const storedAuth = localStorage.getItem('isLoggedIn');
-    if (storedAuth) {
-      setIsLoggedIn(JSON.parse(storedAuth));
-    }
-  }, []);
+    const checkAuth = () => {
+      const storedAuth = localStorage.getItem('isLoggedIn');
+      const isAuthenticated = storedAuth ? JSON.parse(storedAuth) : false;
+      if (isAuthenticated !== isLoggedIn) {
+        setIsLoggedIn(isAuthenticated);
+      }
+    };
+    
+    // Check auth on initial load
+    checkAuth();
+    
+    // Set up an interval to check auth state (in case of multiple tabs)
+    const authCheckInterval = setInterval(checkAuth, 1000);
+    
+    // Clean up interval on unmount
+    return () => clearInterval(authCheckInterval);
+  }, [isLoggedIn]);
 
   const handleLogin = (status) => {
     setIsLoggedIn(status);
     if (status) {
       setShowPredictor(false);
+      // Ensure the login state is properly stored
+      localStorage.setItem('isLoggedIn', JSON.stringify(status));
+    } else {
+      localStorage.removeItem('isLoggedIn');
     }
   };
 
@@ -100,10 +116,7 @@ function App() {
                 !isLoggedIn ? (
                   <Home isLoggedIn={isLoggedIn} onGetStarted={handleGetStarted} />
                 ) : showPredictor ? (
-                  <div className="predictor-container">
-                    <h2>Car Price Prediction</h2>
-                    <CarPricePredictor />
-                  </div>
+                  <CarPricePredictor />
                 ) : (
                   <Dashboard 
                     onLogout={handleAuth} 

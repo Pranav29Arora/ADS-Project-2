@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaCar, FaTachometerAlt, FaGasPump, FaCog, FaCalendarAlt, FaSearchDollar } from 'react-icons/fa';
 import './CarPricePredictor.css';
 
 const API_BASE_URL = 'http://localhost:5001';
@@ -188,109 +189,167 @@ const CarPricePredictor = () => {
 
   return (
     <div className="predictor-container">
-      <h1>Car Price Predictor</h1>
-      <p className="subtitle">Get Ex-Showroom Price Estimate</p>
+      <div className="predictor-header">
+        <div className="header-content">
+          <h1><FaSearchDollar className="header-icon" /> Car Price Predictor</h1>
+          <p className="subtitle">Get an accurate estimate of your car's market value in seconds</p>
+        </div>
+        <div className="header-illustration">
+          <div className="car-animation">
+            <div className="car">
+              <div className="car-top"></div>
+              <div className="car-body">
+                <div className="window"></div>
+                <div className="wheel front"></div>
+                <div className="wheel back"></div>
+              </div>
+              <div className="headlight"></div>
+            </div>
+            <div className="road"></div>
+          </div>
+        </div>
+      </div>
       
-      <form onSubmit={handleSubmit} className="prediction-form">
+      <form onSubmit={handleSubmit} className="prediction-form glass-card">
         {error && <div className="error-message">{error}</div>}
         
         <div className="form-group">
-          <label htmlFor="brand">Brand:</label>
-          <select 
-            id="brand" 
-            name="brand" 
-            value={formData.brand}
-            onChange={handleChange}
-            required
-            disabled={isLoading || availableBrands.length === 0}
-          >
+          <div className="input-with-icon">
+            <FaCar className="input-icon" />
+            <select 
+              id="brand" 
+              name="brand" 
+              value={formData.brand}
+              onChange={handleChange}
+              required
+              disabled={isLoading || availableBrands.length === 0}
+              className={formData.brand ? 'has-value' : ''}
+            >
             <option value="">Select Brand</option>
             {availableBrands.map(brand => (
               <option key={brand} value={brand}>{brand}</option>
             ))}
-          </select>
+            </select>
+            <label htmlFor="brand" className={formData.brand ? 'active' : ''}>Car Brand</label>
+          </div>
         </div>
         
         <div className="form-group">
-          <label htmlFor="model">Model:</label>
-          <select 
-            id="model" 
-            name="model" 
-            value={formData.model}
-            onChange={handleChange}
-            required
-            disabled={!formData.brand || isLoading || availableModels.length === 0}
-          >
+          <div className="input-with-icon">
+            <FaCar className="input-icon" />
+            <select 
+              id="model" 
+              name="model" 
+              value={formData.model}
+              onChange={handleChange}
+              required
+              disabled={!formData.brand || isLoading || availableModels.length === 0}
+              className={formData.model ? 'has-value' : ''}
+            >
             <option value="">Select Model</option>
             {availableModels.map(model => (
               <option key={model} value={model}>{model}</option>
             ))}
-          </select>
+            </select>
+            <label htmlFor="brand" className={formData.brand ? 'active' : ''}>Car Brand</label>
+          </div>
         </div>
         
         <div className="form-group">
-          <label htmlFor="year">Year:</label>
-          <select 
-            id="year" 
-            name="year" 
-            value={formData.year}
-            onChange={handleChange}
-            required
-            disabled={isLoading || availableYears.length === 0}
-          >
+          <div className="input-with-icon">
+            <FaCalendarAlt className="input-icon" />
+            <select 
+              id="year" 
+              name="year" 
+              value={formData.year}
+              onChange={handleChange}
+              required
+              disabled={isLoading || availableYears.length === 0}
+              className={formData.year ? 'has-value' : ''}
+            >
             <option value="">Select Year</option>
             {availableYears.map(year => (
               <option key={year} value={year}>{year}</option>
             ))}
-          </select>
+            </select>
+            <label htmlFor="brand" className={formData.brand ? 'active' : ''}>Car Brand</label>
+          </div>
         </div>
         
         <div className="form-group">
-          <label htmlFor="fuel_type">Fuel Type:</label>
-          <select 
-            id="fuel_type" 
-            name="fuel_type" 
-            value={formData.fuel_type}
-            onChange={handleChange}
-            required
-            disabled={!formData.brand || !formData.model || isLoading || availableFuelTypes.length === 0}
-          >
+          <div className="input-with-icon">
+            <FaGasPump className="input-icon" />
+            <select 
+              id="fuel_type" 
+              name="fuel_type" 
+              value={formData.fuel_type}
+              onChange={handleChange}
+              required
+              disabled={!formData.brand || !formData.model || isLoading || availableFuelTypes.length === 0}
+              className={formData.fuel_type ? 'has-value' : ''}
+            >
             <option value="">Select Fuel Type</option>
             {availableFuelTypes.map(fuel => (
               <option key={fuel} value={fuel}>{fuel}</option>
             ))}
-          </select>
+            </select>
+            <label htmlFor="brand" className={formData.brand ? 'active' : ''}>Car Brand</label>
+          </div>
         </div>
         
         <div className="form-group">
-          <label htmlFor="transmission">Transmission:</label>
-          <select 
-            id="transmission" 
-            name="transmission" 
-            value={formData.transmission}
-            onChange={handleChange}
-            required
-            disabled={isLoading || availableTransmissions.length === 0}
-          >
+          <div className="input-with-icon">
+            <FaCog className="input-icon" />
+            <select 
+              id="transmission" 
+              name="transmission" 
+              value={formData.transmission}
+              onChange={handleChange}
+              required
+              disabled={isLoading || availableTransmissions.length === 0}
+              className={formData.transmission ? 'has-value' : ''}
+            >
             <option value="">Select Transmission</option>
             {availableTransmissions.map(transmission => (
               <option key={transmission} value={transmission}>{transmission}</option>
             ))}
-          </select>
+            </select>
+            <label htmlFor="brand" className={formData.brand ? 'active' : ''}>Car Brand</label>
+          </div>
         </div>
         
         <button 
           type="submit" 
-          className="predict-button"
+          className={`predict-button ${!isFormValid ? 'disabled' : ''}`}
           disabled={isLoading || !isFormValid}
         >
-          {isLoading ? 'Predicting...' : 'Get Ex-Showroom Price'}
+          {isLoading ? (
+            <span className="button-loading">
+              <span className="spinner"></span>
+              Predicting...
+            </span>
+          ) : (
+            <>
+              <FaTachometerAlt className="button-icon" />
+              Get Price Estimate
+            </>
+          )}
         </button>
       </form>
       
       {prediction && (
-        <div className="prediction-result">
-          <div className="price">{formatPrice(prediction)}</div>
+        <div className="prediction-result glass-card">
+          <div className="result-header">
+            <h3>Estimated Market Value</h3>
+            <p>Based on current market trends and your vehicle details</p>
+          </div>
+          <div className="price-container">
+            <div className="price">{formatPrice(prediction)}</div>
+            <div className="price-label">Ex-Showroom Price</div>
+          </div>
+          <div className="disclaimer">
+            <p>This is an estimated price. Actual market value may vary based on condition, mileage, and location.</p>
+          </div>
         </div>
       )}
     </div>
