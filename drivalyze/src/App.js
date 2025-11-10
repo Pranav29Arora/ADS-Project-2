@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -14,18 +14,80 @@ import './components/Contact.css';
 // Dashboard Component
 const Dashboard = ({ onLogout, onShowPredictor }) => {
   const userEmail = localStorage.getItem('userEmail') || 'User';
+  const firstName = userEmail.split('@')[0];
+  const navigate = useNavigate();
+  
+  // Sample recent activity data
+  const recentActivity = [
+    { id: 1, action: 'Logged in', time: 'Just now', icon: '🔒' },
+    { id: 2, action: 'Viewed predictions', time: '2 hours ago', icon: '📊' },
+    { id: 3, action: 'Updated profile', time: '1 day ago', icon: '👤' },
+  ];
+  
+  const handleContactSupport = () => {
+    navigate('/contact');
+  };
 
   return (
     <div className="dashboard">
-      <div className="welcome-container">
-        <div className="welcome-content">
-          <h1>Welcome back! 👋</h1>
-          <p className="welcome-subtitle">
-            Get accurate car price predictions powered by AI
-          </p>
-          <button onClick={onShowPredictor} className="predict-button">
-            Predict Car Price
+      <div className="dashboard-header">
+        <div className="user-greeting">
+          <h1>Welcome back, <span className="highlight">{firstName}</span>! 👋</h1>
+          <p className="subtitle">Here's what's happening with your account today</p>
+        </div>
+        <div className="user-avatar">
+          {firstName.charAt(0).toUpperCase()}
+        </div>
+      </div>
+
+      <div className="dashboard-grid">
+        <div className="dashboard-card primary">
+          <div className="card-icon">🚗</div>
+          <h3>Car Price Prediction</h3>
+          <p>Get accurate price estimates for any car model</p>
+          <button onClick={onShowPredictor} className="action-button">
+            Predict Now <span>→</span>
           </button>
+        </div>
+
+        <div className="dashboard-card secondary">
+          <div className="card-icon">📊</div>
+          <h3>Your Statistics</h3>
+          <div className="stats-grid">
+            <div className="stat-item">
+              <div className="stat-value">12</div>
+              <div className="stat-label">Predictions</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-value">3</div>
+              <div className="stat-label">Saved</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard-card recent-activity">
+          <h3>Recent Activity</h3>
+          <div className="activity-list">
+            {recentActivity.map(activity => (
+              <div key={activity.id} className="activity-item">
+                <span className="activity-icon">{activity.icon}</span>
+                <div className="activity-details">
+                  <div className="activity-action">{activity.action}</div>
+                  <div className="activity-time">{activity.time}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="dashboard-card cta">
+          <div className="cta-content">
+            <h3>Need Help?</h3>
+            <p>Our support team is here to help you with any questions</p>
+            <button onClick={handleContactSupport} className="outline-button">
+              Contact Support
+            </button>
+          </div>
         </div>
       </div>
     </div>
