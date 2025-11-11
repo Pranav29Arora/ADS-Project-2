@@ -65,7 +65,6 @@ const About = () => {
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">How It Works</h2>
-            <p className="section-subtitle">Getting your car's accurate market value is just three simple steps away</p>
           </div>
           
           <div className="process-steps">

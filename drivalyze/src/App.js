@@ -1,100 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import './App.css';
-import Navbar from './components/Navbar';
-import Home from './components/Home';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebaseConfig';
+import { AuthProvider } from './contexts/AuthContext';
 import Login from './components/Login';
-import CarPricePredictor from './components/CarPricePredictor';
+import Signup from './components/Signup';
 import About from './components/About';
 import Contact from './components/Contact';
+import CarPricePredictor from './components/CarPricePredictor';
+import Dashboard from './components/Dashboard';
+import Profile from './components/Profile';
+import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import './App.css';
 import './components/Home.css';
 import './components/Dashboard.css';
 import './components/Contact.css';
-
-// Dashboard Component
-const Dashboard = ({ onLogout, onShowPredictor }) => {
-  const userEmail = localStorage.getItem('userEmail') || 'User';
-  const firstName = userEmail.split('@')[0];
-  const navigate = useNavigate();
-  
-  // Sample recent activity data
-  const recentActivity = [
-    { id: 1, action: 'Logged in', time: 'Just now', icon: '🔒' },
-    { id: 2, action: 'Viewed predictions', time: '2 hours ago', icon: '📊' },
-    { id: 3, action: 'Updated profile', time: '1 day ago', icon: '👤' },
-  ];
-  
-  const handleContactSupport = () => {
-    navigate('/contact');
-  };
-
-  return (
-    <div className="dashboard">
-      <div className="dashboard-header">
-        <div className="user-greeting">
-          <h1>Welcome back, <span className="highlight">{firstName}</span>! 👋</h1>
-          <p className="subtitle">Here's what's happening with your account today</p>
-        </div>
-        <div className="user-avatar">
-          {firstName.charAt(0).toUpperCase()}
-        </div>
-      </div>
-
-      <div className="dashboard-grid">
-        <div className="dashboard-card primary">
-          <div className="card-icon">🚗</div>
-          <h3>Car Price Prediction</h3>
-          <p>Get accurate price estimates for any car model</p>
-          <button onClick={onShowPredictor} className="action-button">
-            Predict Now <span>→</span>
-          </button>
-        </div>
-
-        <div className="dashboard-card secondary">
-          <div className="card-icon">📊</div>
-          <h3>Your Statistics</h3>
-          <div className="stats-grid">
-            <div className="stat-item">
-              <div className="stat-value">12</div>
-              <div className="stat-label">Predictions</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-value">3</div>
-              <div className="stat-label">Saved</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="dashboard-card recent-activity">
-          <h3>Recent Activity</h3>
-          <div className="activity-list">
-            {recentActivity.map(activity => (
-              <div key={activity.id} className="activity-item">
-                <span className="activity-icon">{activity.icon}</span>
-                <div className="activity-details">
-                  <div className="activity-action">{activity.action}</div>
-                  <div className="activity-time">{activity.time}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="dashboard-card cta">
-          <div className="cta-content">
-            <h3>Need Help?</h3>
-            <p>Our support team is here to help you with any questions</p>
-            <button onClick={handleContactSupport} className="outline-button">
-              Contact Support
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -108,51 +30,86 @@ const ScrollToTop = () => {
 };
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Initialize isLoggedIn from localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
   const [showPredictor, setShowPredictor] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Check for existing session on initial load and on route changes
+  // Check for existing session on initial load and on auth state changes
   useEffect(() => {
-    const checkAuth = () => {
-      const storedAuth = localStorage.getItem('isLoggedIn');
-      const isAuthenticated = storedAuth ? JSON.parse(storedAuth) : false;
-      if (isAuthenticated !== isLoggedIn) {
-        setIsLoggedIn(isAuthenticated);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      try {
+        if (user) {
+          // User is signed in
+          setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userEmail', user.email || '');
+          localStorage.setItem('userId', user.uid);
+        } else {
+          // User is signed out
+          setIsLoggedIn(false);
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userEmail');
+          localStorage.removeItem('userId');
+        }
+      } catch (error) {
+        console.error('Auth state change error:', error);
+        setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userId');
+      } finally {
+        setIsLoading(false);
       }
-    };
-    
-    // Check auth on initial load
-    checkAuth();
-    
-    // Set up an interval to check auth state (in case of multiple tabs)
-    const authCheckInterval = setInterval(checkAuth, 1000);
-    
-    // Clean up interval on unmount
-    return () => clearInterval(authCheckInterval);
-  }, [isLoggedIn]);
+    });
+
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
   const handleLogin = (status) => {
     setIsLoggedIn(status);
     if (status) {
       setShowPredictor(false);
       // Ensure the login state is properly stored
-      localStorage.setItem('isLoggedIn', JSON.stringify(status));
+      localStorage.setItem('isLoggedIn', 'true');
     } else {
       localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userId');
     }
   };
 
-  const handleAuth = () => {
+  const handleAuth = async () => {
     if (isLoggedIn) {
-      // Handle logout
-      setIsLoggedIn(false);
-      setShowPredictor(false);
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('userEmail');
-      // Redirect to home after logout
-      window.location.href = '/';
+      try {
+        // Sign out from Firebase
+        await auth.signOut();
+        
+        // Clear local state
+        setIsLoggedIn(false);
+        setShowPredictor(false);
+        
+        // Clear local storage
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userId');
+        
+        // Force a full page reload to reset all component states
+        window.location.href = '/';
+      } catch (error) {
+        console.error('Error signing out:', error);
+        // Even if there's an error, still try to clear local state
+        setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userId');
+        window.location.href = '/';
+      }
     } else {
-      // Navigate to login page instead of directly logging in
+      // Navigate to login page
       window.location.href = '/login';
     }
   };
@@ -161,60 +118,86 @@ function App() {
     handleAuth(); // This will log the user in
   };
 
+  // This function is used by the Dashboard component to show the predictor
   const handleShowPredictor = () => {
     setShowPredictor(true);
   };
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className={`App ${isLoggedIn ? 'dashboard-view' : ''}`}>
-        <Navbar isLoggedIn={isLoggedIn} onAuthClick={handleAuth} />
-        <main>
-          <Routes>
-            <Route 
-              path="/" 
-              element={
-                !isLoggedIn ? (
-                  <Home isLoggedIn={isLoggedIn} onGetStarted={handleGetStarted} />
-                ) : showPredictor ? (
+    <AuthProvider>
+      <Router>
+        <ScrollToTop />
+        <div className={`App ${isLoggedIn ? 'dashboard-view' : ''}`}>
+          <Navbar isLoggedIn={isLoggedIn} onAuthClick={handleAuth} />
+          <main>
+            <Routes>
+              <Route 
+                path="/login" 
+                element={isLoggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} 
+              />
+              <Route 
+                path="/signup" 
+                element={isLoggedIn ? <Navigate to="/" /> : <Signup onSignup={handleLogin} />} 
+              />
+              <Route 
+                path="/" 
+                element={
+                  isLoggedIn ? (
+                    showPredictor ? (
+                      <CarPricePredictor />
+                    ) : (
+                      <Dashboard />
+                    )
+                  ) : (
+                    <Home isLoggedIn={isLoggedIn} onGetStarted={handleGetStarted} />
+                  )
+                } 
+              />
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute isAuthenticated={isLoggedIn}>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/predict" element={
+                <ProtectedRoute isAuthenticated={isLoggedIn}>
                   <CarPricePredictor />
-                ) : (
-                  <Dashboard 
-                    onLogout={handleAuth} 
-                    onShowPredictor={handleShowPredictor} 
-                  />
-                )
-              } 
-            />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <footer>
-          <div className="footer-content">
-            <nav className="footer-links">
-              <a href="/about">About</a>
-              <a href="/contact">Contact</a>
-              <a href="#privacy">Privacy Policy</a>
-              <a href="#terms">Terms of Service</a>
-            </nav>
-            <div className="social-links">
-              <a href="#twitter" aria-label="Twitter">🐦</a>
-              <a href="#facebook" aria-label="Facebook">👍</a>
-              <a href="#instagram" aria-label="Instagram">📷</a>
-              <a href="#linkedin" aria-label="LinkedIn">💼</a>
+                </ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                <ProtectedRoute isAuthenticated={isLoggedIn}>
+                  <Profile />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </main>
+          <footer>
+            <div className="footer-content">
+              <nav className="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+              </nav>
+              <div className="social-links">
+                <a href="#twitter" aria-label="Twitter">🐦</a>
+                <a href="#facebook" aria-label="Facebook">👍</a>
+                <a href="#instagram" aria-label="Instagram">📷</a>
+                <a href="#linkedin" aria-label="LinkedIn">💼</a>
+              </div>
+              <p className="copyright">
+                &copy; 2025 drivalyze — Empowering Smart Automotive Decisions.
+              </p>
             </div>
-            <p className="copyright">
-              &copy; 2025 drivalyze — Empowering Smart Automotive Decisions.
-            </p>
-          </div>
-        </footer>
-      </div>
-    </Router>
+          </footer>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
-
 
 export default App;

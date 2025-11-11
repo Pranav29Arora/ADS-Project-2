@@ -402,3 +402,144 @@ Volkswagen,Vento,2024,Petrol,Manual,1150592
 Volkswagen,Vento,2025,Diesel,Manual,1548935
 Volkswagen,Vento,2025,Petrol,Automatic,1539347
 Volkswagen,Vento,2025,Petrol,Manual,1213822
+Hyundai,Creta,2021,Diesel,Automatic,1825000
+Hyundai,Creta,2021,Diesel,Manual,1623000
+Hyundai,Creta,2021,Petrol,Automatic,1728000
+Hyundai,Creta,2021,Petrol,Manual,1499000
+Hyundai,Creta,2024,Diesel,Automatic,2104000
+Hyundai,Creta,2024,Diesel,Manual,1856000
+Hyundai,Creta,2024,Petrol,Automatic,1999000
+Hyundai,Creta,2024,Petrol,Manual,1725000
+Hyundai,Verna,2021,Diesel,Automatic,1549000
+Hyundai,Verna,2021,Petrol,Automatic,1449000
+Hyundai,Verna,2021,Petrol,Manual,1249000
+Hyundai,Verna,2024,Diesel,Automatic,1699000
+Hyundai,Verna,2024,Petrol,Automatic,1599000
+Hyundai,Verna,2024,Petrol,Manual,1399000
+Tata,Nexon,2021,Diesel,Manual,1049000
+Tata,Nexon,2021,Petrol,Automatic,1199000
+Tata,Nexon,2021,Petrol,Manual,899000
+Tata,Nexon,2024,Diesel,Manual,1299000
+Tata,Nexon,2024,Petrol,Automatic,1449000
+Tata,Nexon,2024,Petrol,Manual,1049000
+Kia,EV6,2024,Electric,Automatic,5995000
+Kia,EV6,2025,Electric,Automatic,6199000
+Hyundai,Ioniq 5,2024,Electric,Automatic,4499000
+Hyundai,Ioniq 5,2025,Electric,Automatic,4699000
+MG,Gloster,2021,Diesel,Automatic,3298000
+MG,Gloster,2024,Diesel,Automatic,3498000
+MG,Gloster,2025,Diesel,Automatic,3698000
+Mahindra,Thar,2021,Diesel,Manual,1349000
+Mahindra,Thar,2021,Petrol,Manual,1249000
+Mahindra,Thar,2024,Diesel,Automatic,1649000
+Mahindra,Thar,2024,Diesel,Manual,1449000
+Mahindra,Thar,2024,Petrol,Automatic,1549000
+Mahindra,Thar,2024,Petrol,Manual,1349000
+Skoda,Kushaq,2021,Petrol,Automatic,1799000
+Skoda,Kushaq,2021,Petrol,Manual,1599000
+Skoda,Kushaq,2024,Petrol,Automatic,1899000
+Skoda,Kushaq,2024,Petrol,Manual,1699000
+Volkswagen,Taigun,2021,Petrol,Automatic,1799000
+Volkswagen,Taigun,2021,Petrol,Manual,1599000
+Volkswagen,Taigun,2024,Petrol,Automatic,1899000
+Volkswagen,Taigun,2024,Petrol,Manual,1699000
+Toyota,Urban Cruiser Hyryder,2024,Hybrid,Automatic,1999000
+Toyota,Urban Cruiser Hyryder,2024,Petrol,Manual,1499000
+Toyota,Urban Cruiser Hyryder,2025,Hybrid,Automatic,2099000
+Toyota,Urban Cruiser Hyryder,2025,Petrol,Manual,1599000
+BMW,3 Series,2021,Diesel,Automatic,4690000
+BMW,3 Series,2021,Petrol,Automatic,4390000
+BMW,3 Series,2024,Diesel,Automatic,5190000
+BMW,3 Series,2024,Petrol,Automatic,4890000
+BMW,5 Series,2021,Diesel,Automatic,6690000
+BMW,5 Series,2021,Petrol,Automatic,6290000
+BMW,5 Series,2024,Diesel,Automatic,7290000
+BMW,5 Series,2024,Petrol,Automatic,6890000
+Mercedes-Benz,A-Class,2021,Petrol,Automatic,4290000
+Mercedes-Benz,A-Class,2024,Petrol,Automatic,4690000
+Mercedes-Benz,C-Class,2021,Diesel,Automatic,5990000
+Mercedes-Benz,C-Class,2021,Petrol,Automatic,5690000
+Mercedes-Benz,C-Class,2024,Diesel,Automatic,6590000
+Mercedes-Benz,C-Class,2024,Petrol,Automatic,6290000
+Audi,A4,2021,Diesel,Automatic,4590000
+Audi,A4,2021,Petrol,Automatic,4390000
+Audi,A4,2024,Diesel,Automatic,5090000
+Audi,A4,2024,Petrol,Automatic,4890000
+Audi,Q3,2021,Petrol,Automatic,4490000
+Audi,Q3,2024,Petrol,Automatic,4890000
+Volvo,XC40,2021,Petrol,Automatic,4190000
+Volvo,XC40,2024,Petrol,Automatic,4590000
+Volvo,XC60,2021,Diesel,Automatic,6290000
+Volvo,XC60,2024,Diesel,Automatic,6890000
+Jaguar,XE,2021,Petrol,Automatic,4690000
+Jaguar,XE,2024,Petrol,Automatic,5190000
+Jaguar,F-PACE,2021,Diesel,Automatic,6590000
+Jaguar,F-PACE,2024,Diesel,Automatic,7190000
+Land Rover,Range Rover Evoque,2021,Diesel,Automatic,6890000
+Land Rover,Range Rover Evoque,2024,Diesel,Automatic,7490000
+Land Rover,Range Rover Velar,2021,Diesel,Automatic,7890000
+Land Rover,Range Rover Velar,2024,Diesel,Automatic,8590000
+Porsche,Macan,2021,Petrol,Automatic,8290000
+Porsche,Macan,2024,Petrol,Automatic,8990000
+Porsche,Cayenne,2021,Petrol,Automatic,12890000
+Porsche,Cayenne,2024,Petrol,Automatic,13990000
+Lexus,ES,2021,Hybrid,Automatic,5990000
+Lexus,ES,2024,Hybrid,Automatic,6590000
+Lexus,NX,2021,Hybrid,Automatic,6590000
+Lexus,NX,2024,Hybrid,Automatic,7190000
+Maserati,Ghibli,2021,Petrol,Automatic,15900000
+Maserati,Ghibli,2024,Petrol,Automatic,16900000
+Maserati,Levante,2021,Petrol,Automatic,16900000
+Maserati,Levante,2024,Petrol,Automatic,17900000
+Ferrari,Roma,2024,Petrol,Automatic,42500000
+Ferrari,Portofino,2024,Petrol,Automatic,44500000
+Lamborghini,Huracan,2024,Petrol,Automatic,38500000
+Lamborghini,Urus,2024,Petrol,Automatic,41500000
+Bentley,Bentayga,2024,Petrol,Automatic,42500000
+Bentley,Continental GT,2024,Petrol,Automatic,46900000
+Rolls-Royce,Cullinan,2024,Petrol,Automatic,69500000
+Rolls-Royce,Ghost,2024,Petrol,Automatic,62500000
+Aston Martin,DBX,2024,Petrol,Automatic,38500000
+Aston Martin,Vantage,2024,Petrol,Automatic,32500000
+McLaren,720S,2024,Petrol,Automatic,48500000
+McLaren,GT,2024,Petrol,Automatic,42500000
+Bugatti,Chiron,2024,Petrol,Automatic,249500000
+Bugatti,Veyron,2024,Petrol,Automatic,185000000
+Koenigsegg,Jesko,2024,Petrol,Automatic,289500000
+Pagani,Huayra,2024,Petrol,Automatic,325000000
+Tesla,Model S,2024,Electric,Automatic,12990000
+Tesla,Model 3,2024,Electric,Automatic,6590000
+Tesla,Model X,2024,Electric,Automatic,14990000
+Tesla,Model Y,2024,Electric,Automatic,7490000
+Rivian,R1T,2024,Electric,Automatic,15900000
+Rivian,R1S,2024,Electric,Automatic,16900000
+Lucid,Air,2024,Electric,Automatic,18900000
+Lucid,Air Dream,2024,Electric,Automatic,24900000
+Fisker,Ocean,2024,Electric,Automatic,6990000
+Fisker,PEAR,2024,Electric,Automatic,5290000
+Polestar,2,2024,Electric,Automatic,6590000
+Polestar,3,2024,Electric,Automatic,8990000
+Rimac,Nevera,2024,Electric,Automatic,169000000
+Lotus,Evija,2024,Electric,Automatic,1450000000
+Lotus,Emira,2024,Petrol,Automatic,12900000
+Alpine,A110,2024,Petrol,Automatic,8990000
+Alpine,A110S,2024,Petrol,Automatic,9990000
+Aston Martin,Valkyrie,2024,Hybrid,Automatic,289500000
+Aston Martin,Valhalla,2024,Hybrid,Automatic,189500000
+Ferrari,SF90 Stradale,2024,Hybrid,Automatic,72500000
+Ferrari,296 GTB,2024,Hybrid,Automatic,58900000
+McLaren,Artura,2024,Hybrid,Automatic,48500000
+McLaren,Elva,2024,Petrol,Automatic,225000000
+Bugatti,Bolide,2024,Petrol,Automatic,425000000
+Koenigsegg,Gemera,2024,Hybrid,Automatic,289500000
+Rimac,Concept_One,2024,Electric,Automatic,185000000
+Pininfarina,Battista,2024,Electric,Automatic,249500000
+Lamborghini,Sian,2024,Hybrid,Automatic,325000000
+Porsche,Taycan,2024,Electric,Automatic,16900000
+Porsche,Taycan Turbo S,2024,Electric,Automatic,24900000
+Audi,e-tron GT,2024,Electric,Automatic,15900000
+Audi,RS e-tron GT,2024,Electric,Automatic,19900000
+Mercedes-Benz,EQS,2024,Electric,Automatic,15900000
+Mercedes-Benz,EQS AMG,2024,Electric,Automatic,24900000
+BMW,i7,2024,Electric,Automatic,16900000
+BMW,iX,2024,Electric,Automatic,12900000

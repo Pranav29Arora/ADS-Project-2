@@ -6,27 +6,41 @@ import pandas as pd
 import json
 import os
 
+# Global variables to store the model and dataset info
+model = None
+brand_encoder = None
+model_encoder = None
+fuel_encoder = None
+transmission_encoder = None
+dataset_info = None
+
+def load_models_and_data():
+    """Load the model and dataset info"""
+    global model, brand_encoder, model_encoder, fuel_encoder, transmission_encoder, dataset_info
+    
+    print("Loading model and encoders...")
+    try:
+        model = joblib.load('models/car_price_model.pkl')
+        brand_encoder = joblib.load('models/brand_encoder.pkl')
+        model_encoder = joblib.load('models/model_encoder.pkl')
+        fuel_encoder = joblib.load('models/fuel_encoder.pkl')
+        transmission_encoder = joblib.load('models/transmission_encoder.pkl')
+        
+        # Load dataset info
+        with open('models/dataset_info.json', 'r') as f:
+            dataset_info = json.load(f)
+        
+        print("Model and dataset info loaded successfully!")
+        return True
+    except Exception as e:
+        print(f"Error loading model or dataset: {e}")
+        return False
+
 app = Flask(__name__)
 CORS(app)
 
-# Load the model and encoders
-print("Loading model and encoders...")
-try:
-    model = joblib.load('models/car_price_model.pkl')
-    brand_encoder = joblib.load('models/brand_encoder.pkl')
-    model_encoder = joblib.load('models/model_encoder.pkl')
-    fuel_encoder = joblib.load('models/fuel_encoder.pkl')
-    transmission_encoder = joblib.load('models/transmission_encoder.pkl')
-    
-    # Load dataset info
-    with open('models/dataset_info.json', 'r') as f:
-        dataset_info = json.load(f)
-    
-    print("Model loaded successfully!")
-except Exception as e:
-    print(f"Error loading model: {e}")
-    model = None
-    dataset_info = None
+# Load models and dataset info on startup
+load_models_and_data()
 
 @app.route('/api/brands', methods=['GET'])
 def get_brands():
@@ -146,13 +160,32 @@ def predict_price():
     except Exception as e:
         return jsonify({'error': f'Prediction error: {str(e)}'}), 500
 
+@app.route('/api/reload', methods=['POST'])
+def reload_data():
+    """Reload the dataset info and models"""
+    success = load_models_and_data()
+    if success:
+        return jsonify({
+            'status': 'success',
+            'message': 'Dataset and models reloaded successfully',
+            'brands_count': len(dataset_info['brands']) if dataset_info else 0,
+            'models_count': sum(len(models) for models in dataset_info['models_by_brand'].values()) if dataset_info else 0
+        })
+    else:
+        return jsonify({
+            'status': 'error',
+            'message': 'Failed to reload dataset and models'
+        }), 500
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
     return jsonify({
         'status': 'healthy',
         'model_loaded': model is not None,
-        'dataset_info_loaded': dataset_info is not None
+        'dataset_info_loaded': dataset_info is not None,
+        'brands_count': len(dataset_info['brands']) if dataset_info else 0,
+        'models_count': sum(len(models) for models in dataset_info['models_by_brand'].values()) if dataset_info else 0
     })
 
 if __name__ == '__main__':

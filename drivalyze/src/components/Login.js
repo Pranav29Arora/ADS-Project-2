@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaUser, FaLock, FaArrowRight } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { FiMail, FiLock, FiArrowRight, FiUserPlus } from 'react-icons/fi';
+import { FaGoogle } from 'react-icons/fa';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from '../firebaseConfig';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
@@ -9,58 +13,9 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
 
-  // Create floating particles
-  useEffect(() => {
-    const loginContainer = document.querySelector('.login-container');
-    if (!loginContainer) return;
-    
-    const createParticle = () => {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      
-      // Random size between 2px and 6px
-      const size = Math.random() * 4 + 2;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      
-      // Random position
-      particle.style.left = `${Math.random() * 100}%`;
-      particle.style.top = `${Math.random() * 100}%`;
-      
-      // Random animation duration between 10s and 20s
-      const duration = Math.random() * 10 + 10;
-      particle.style.setProperty('--duration', `${duration}s`);
-      
-      // Random delay
-      particle.style.animationDelay = `${Math.random() * 5}s`;
-      
-      // Add to container
-      loginContainer.appendChild(particle);
-      
-      // Remove after animation completes
-      setTimeout(() => {
-        if (particle && particle.parentNode === loginContainer) {
-          particle.remove();
-        }
-      }, duration * 1000);
-    };
-
-    // Create initial particles
-    let timeouts = [];
-    for (let i = 0; i < 15; i++) {
-      const timeout = setTimeout(createParticle, i * 1000);
-      timeouts.push(timeout);
-    }
-    
-    // Create new particles periodically
-    const interval = setInterval(createParticle, 2000);
-    
-    return () => {
-      clearInterval(interval);
-      timeouts.forEach(clearTimeout);
-    };
-  }, []);
+  // Removed particle effect for cleaner UI
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,23 +38,87 @@ const Login = ({ onLogin }) => {
     }
 
     try {
-      // Simulate API call - in real app, this would be an actual API call
-      setTimeout(() => {
-        // For demo purposes, accept any email/password combination
-        // In production, you would verify credentials with backend
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('userEmail', email);
-        
-        // Notify parent component about successful login
-        if (onLogin) {
-          onLogin(true);
-        }
-        
-        // Navigate to home page
-        navigate('/');
-      }, 500);
+      // Sign in with Firebase Authentication
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      // Store user data in localStorage
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', user.email);
+      localStorage.setItem('userId', user.uid);
+      
+      // Notify parent component about successful login
+      if (onLogin) {
+        onLogin(true);
+      }
+      
+      // Navigate to home page
+      navigate('/');
     } catch (error) {
-      setError('An error occurred during login. Please try again.');
+      console.error('Login error:', error);
+      
+      // More specific error messages based on Firebase error codes
+      switch(error.code) {
+        case 'auth/user-not-found':
+          setError('No user found with this email address.');
+          break;
+        case 'auth/wrong-password':
+          setError('Incorrect password. Please try again.');
+          break;
+        case 'auth/too-many-requests':
+          setError('Too many failed attempts. Please try again later.');
+          break;
+        case 'auth/invalid-email':
+          setError('The email address is not valid.');
+          break;
+        default:
+          setError('Failed to sign in. Please check your credentials and try again.');
+      }
+      
+      setIsLoading(false);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      // Clear any existing popup state
+      if (window.googleAuthPopup) {
+        window.googleAuthPopup.close();
+      }
+      
+      // Add a small delay to ensure any previous popup is fully closed
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      
+      // Store user data in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        createdAt: serverTimestamp(),
+        lastLogin: serverTimestamp()
+      }, { merge: true });
+      
+      // Notify parent component about successful login
+      if (onLogin) {
+        onLogin(true);
+      }
+      
+      // Navigate to home page
+      navigate('/');
+    } catch (error) {
+      console.error('Google sign in error:', error);
+      // Don't show error if user closed the popup
+      if (error.code !== 'auth/cancelled-popup-request' && 
+          error.code !== 'auth/popup-closed-by-user') {
+        setError('Failed to sign in with Google. Please try again.');
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -109,39 +128,76 @@ const Login = ({ onLogin }) => {
       <div className="login-card">
         <div className="login-header">
           <h1>Welcome Back</h1>
-          <p>Sign in to continue to drivalyze</p>
+          <p>Sign in to your account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           {error && <div className="error-message">{error}</div>}
 
           <div className="form-group">
-            <i><FaUser /></i>
-            <input
-              type="email"
-              id="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <label htmlFor="email">Email</label>
+            <div className="input-wrapper">
+              <FiMail className="input-icon" />
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
           </div>
+          
           <div className="form-group">
-            <i><FaLock /></i>
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="label-wrapper">
+              <label htmlFor="password">Password</label>
+              <Link to="/forgot-password" className="forgot-password">Forgot password?</Link>
+            </div>
+            <div className="input-wrapper">
+              <FiLock className="input-icon" />
+              <input
+                type="password"
+                id="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
           <button type="submit" className="login-button" disabled={isLoading}>
-            <span>Sign In</span>
-            <FaArrowRight className="button-icon" />
+            {isLoading ? (
+              <span className="button-loader"></span>
+            ) : (
+              <>
+                Sign In
+                <FiArrowRight className="button-icon" />
+              </>
+            )}
           </button>
+          
+          <div className="divider">
+            <span>or continue with</span>
+          </div>
+          
+          <button 
+            type="button" 
+            className="google-button"
+            onClick={signInWithGoogle}
+            disabled={isLoading}
+          >
+            <FaGoogle className="google-icon" />
+            Google
+          </button>
+          
+          <div className="signup-link">
+            Don't have an account?{' '}
+            <Link to="/signup" className="signup-text">
+              <FiUserPlus className="signup-icon" /> Sign up
+            </Link>
+          </div>
         </form>
       </div>
     </div>

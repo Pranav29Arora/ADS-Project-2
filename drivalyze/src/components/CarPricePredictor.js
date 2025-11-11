@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaCar, FaTachometerAlt, FaGasPump, FaCog, FaCalendarAlt, FaSearchDollar } from 'react-icons/fa';
+import { db } from '../firebaseConfig';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
 import './CarPricePredictor.css';
 
 const API_BASE_URL = 'http://localhost:5001';
@@ -20,6 +23,7 @@ const CarPricePredictor = () => {
   const [availableYears, setAvailableYears] = useState([]);
   const [availableFuelTypes, setAvailableFuelTypes] = useState([]);
   const [availableTransmissions, setAvailableTransmissions] = useState([]);
+  const { currentUser } = useAuth();
 
   // Fetch available brands, years, and transmissions from dataset on component mount
   useEffect(() => {
@@ -79,7 +83,7 @@ const CarPricePredictor = () => {
       }
     };
     fetchModels();
-  }, [formData.brand]);
+  }, [formData.brand, formData.model]);
 
   // Fetch fuel types when brand and model are selected
   useEffect(() => {
@@ -110,7 +114,7 @@ const CarPricePredictor = () => {
       }
     };
     fetchFuelTypes();
-  }, [formData.brand, formData.model]);
+  }, [formData.brand, formData.model, formData.fuel_type]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -146,6 +150,10 @@ const CarPricePredictor = () => {
     setPrediction(null);
     
     try {
+      if (!currentUser) {
+        throw new Error('You must be logged in to make predictions');
+      }
+
       const response = await fetch(`${API_BASE_URL}/predict`, {
         method: 'POST',
         headers: {
@@ -166,7 +174,26 @@ const CarPricePredictor = () => {
       }
       
       const data = await response.json();
-      setPrediction(data.predicted_price);
+      const predictedPrice = data.predicted_price;
+      setPrediction(predictedPrice);
+      
+      // Save prediction to Firestore
+      try {
+        await addDoc(collection(db, 'predictions'), {
+          userId: currentUser.uid,
+          userEmail: currentUser.email,
+          brand: formData.brand,
+          model: formData.model,
+          year: parseInt(formData.year),
+          fuelType: formData.fuel_type,
+          transmission: formData.transmission,
+          predictedPrice: predictedPrice,
+          timestamp: serverTimestamp()
+        });
+      } catch (firestoreError) {
+        console.error('Error saving prediction to Firestore:', firestoreError);
+        // Don't fail the prediction if Firestore save fails
+      }
       
     } catch (err) {
       console.error('Prediction error:', err);
