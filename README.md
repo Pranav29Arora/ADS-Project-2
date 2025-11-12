@@ -1,22 +1,132 @@
-# drivalyze - Car Price Prediction System
+# 🚗 Drivalyze - Intelligent Car Price Prediction System
 
-A machine learning-based car price prediction application that provides accurate ex-showroom price estimates for Indian car market.
+## 📸 Screenshots
 
-## Features
+<div align="center">
+  <h3>Landing Page</h3>
+  <img src="screenshots/Landing-page.png" alt="Landing Page" width="800"/>
+  <p>Welcome to Drivalyze - Your intelligent car price prediction platform</p>
+  
+  <h3>Login Page</h3>
+  <img src="screenshots/Login-page.png" alt="Login Page" width="400"/>
+  <p>Secure login to access personalized features and save your predictions</p>
+  
+  <h3>Dashboard</h3>
+  <img src="screenshots/dashboard.png" alt="Dashboard" width="800"/>
+  <p>Your personalized dashboard with saved predictions and market insights</p>
+  
+  <h3>Price Prediction</h3>
+  <img src="screenshots/prediction-page.png" alt="Price Prediction" width="800"/>
+  <p>Get instant price estimates by entering vehicle specifications</p>
+  
+  <h3>Prediction Results</h3>
+  <img src="screenshots/prediction-result.png" alt="Prediction Results" width="800"/>
+  <p>Detailed price prediction with confidence scores and market comparison</p>
+</div>
 
-- **AI-Powered Predictions**: Uses Random Forest Regressor trained on real market data
-- **Comprehensive Dataset**: 400+ car configurations across 14 brands and 48 models
-- **Year Support**: Predictions available for years 2019-2025
-- **Dynamic Filtering**: Brand, model, fuel type, and transmission filters based on actual dataset
-- **Modern UI**: Clean and responsive React frontend
-- **RESTful API**: Flask backend with ML model integration
+## 📌 Overview
+Drivalyze is a cutting-edge car price prediction platform that leverages machine learning to provide accurate ex-showroom price estimates for the Indian automotive market. Our system helps both buyers and sellers make informed decisions with data-driven insights.
 
-## Tech Stack
+## ✨ Key Features
+- **AI-Powered Price Predictions**: Utilizes advanced machine learning models (Random Forest Regressor) trained on comprehensive market data
+- **Comprehensive Vehicle Database**: Covers 400+ car configurations across 14+ leading brands and 48+ models
+- **Dynamic Market Analysis**: Real-time price trends and market insights
+- **User-Friendly Interface**: Intuitive dashboard with interactive filters and visualizations
+- **Data-Driven Insights**: Detailed price breakdowns and market comparisons
+- **Responsive Design**: Seamless experience across desktop and mobile devices
 
-### Frontend
-- React.js
-- React Router
-- CSS3
+## 🛠️ Technical Stack
+- **Frontend**: React.js, React Router, Tailwind CSS
+- **Backend**: Python, Flask, Flask-CORS
+- **Machine Learning**: Scikit-learn, Pandas, NumPy
+- **Data Visualization**: Chart.js, React-ChartJS-2
+- **Version Control**: Git, GitHub
+
+## 📊 Power BI Integration
+- Interactive dashboards for in-depth market analysis
+- Real-time data visualization of car price trends
+- Comprehensive reports on market performance
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v14+)
+- Python (3.8+)
+- pip (Python package manager)
+
+### Installation
+1. Clone the repository
+2. Set up the backend:
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. Set up the frontend:
+   ```bash
+   cd ../drivalyze
+   npm install
+   ```
+
+### Running the Application
+1. Start the backend server:
+   ```bash
+   cd backend
+   python app.py
+   ```
+2. Start the frontend development server:
+   ```bash
+   cd ../drivalyze
+   npm start
+   ```
+3. Open http://localhost:3006 to view the application
+
+## 📂 Project Structure
+```
+ADS-Project-2/
+├── backend/              # Flask server and ML model
+│   ├── data/             # Dataset and model files
+│   ├── models/           # ML model and preprocessing
+│   ├── app.py            # Main Flask application
+│   └── requirements.txt  # Python dependencies
+├── drivalyze/            # React frontend
+│   ├── public/           # Static files
+│   └── src/              # React components and pages
+└── screenshots/          # Application screenshots
+```
+
+## 📈 Features in Detail
+
+### Smart Price Prediction
+- Input vehicle specifications to get instant price estimates
+- Compare predicted prices with market averages
+- Save and track your predictions
+
+### Market Analysis
+- View historical price trends
+- Compare models side by side
+- Get insights on best value for money
+
+### User Dashboard
+- Track your search history
+- Save favorite vehicles
+- Get personalized recommendations
+
+## 🤝 Contributing
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📬 Contact
+For any queries or feedback, please reach out to us at [your-email@example.com](mailto:your-email@example.com)
+
+---
+
+<div align="center">
+  Made with ❤️ by [Your Name] | [![GitHub](https://img.shields.io/github/followers/username?style=social)](https://github.com/Pranav29Arora)
+</div>
 
 ### Backend
 - Python 3
